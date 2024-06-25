@@ -1,12 +1,13 @@
-let display=document.querySelector('.display h1')
+let display=document.querySelector('.display span')
 
-let start=document.querySelector(".start")
-let stop=document.querySelector(".stop")
-let restart=document.querySelector(".restart")
+let start=document.querySelector(".startk")
+let stopp=document.querySelector(".stopk")
+let restart=document.querySelector(".resetk")
 
 let timeSpent=0
 let state=false
  let startTime=0
+ let timer=null
 
 
 function convertMilliseconds(ms) {
@@ -31,21 +32,34 @@ function convertMilliseconds(ms) {
    };
 }
 function starter(){
-   let startTime= Date.now()-timeSpent
+   
  if(state==false){
-   setInterval(updater,100)
+  startTime= Date.now() 
+  timer=setInterval(updater,100)
    state=true
  }}
 
- start.addEventListener('click',starter)
-
-
+ start.addEventListener("click",starter)
+function stoper (){
+  state=false
+  clearInterval(timer)
+  startTime=startTime+timeSpent
+}
+function reset(){
+  display.innerHTML=`00:00:00`  
+}
 function updater(){
+  console.log(startTime)
    timeSpent=Date.now()-startTime
      timeSpent=convertMilliseconds(timeSpent)
-display.textContent=`${timeSpent.hours}:${timeSpent.minutes}:${timeSpent.seconds}`
+    
+    
+
+display.innerHTML=`${timeSpent.hours}:${timeSpent.minutes}:${timeSpent.seconds}`
 
 }
-
+start.addEventListener('click',starter)
+stopp.addEventListener('click',stoper)
+restart.addEventListener('click',reset)
 
 
